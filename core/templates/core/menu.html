@@ -1,0 +1,76 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #header, #content {
+            /* width: 810px; */
+            margin: 0 auto;
+            overflow: hidden; 
+        }
+        #header .left_space {
+            width: 400px; 
+            float: left;
+            background-color: #f3f3f3;
+            border: 1px solid #cccccc;
+        }
+        #header .center_space {
+            width: 400px; 
+            float: left;
+            background-color: #f3f3f3;
+            border: 1px solid #cccccc;
+        }
+        #header .right_space {
+            width: 400px; 
+            float: left;
+            background-color: #f3f3f3;
+            border: 1px solid #cccccc;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <div class="left_space">
+                <div>
+                    {% for post in posts %}
+                        <div>
+                            <img src="{{ post.photo.url }}" alt="{{ post.title }}"><br>
+                            <p>{{ post.title }}</p>
+                        </div>
+                    {% endfor %}
+                </div>  
+            </div>
+            <div class="center_space">
+                {% for form in forms %} 
+                    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                        <h3>{{ form.as_p }}<button type="submit" class="save btn btn-default">담기</button></h3> 
+                    </form>
+                {% endfor %}
+            </div>
+            <div class="right_space">
+                <div>
+                    {% for post in posts %}
+                        <div>
+                            {{ post.count }} * {{ post.price }} = {{ post.count|mul:post.price }}
+                        </div>
+                    {% endfor %}
+                    <a href="{% url 'payment' %}"><button>결제</button></a>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <!-- <div>
+        {% for form in forms %}
+        <div>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <h3>{{ forms.as_p }}<button type="submit" class="save btn btn-default">담기</button></h3> 
+            </form>       
+        </div>
+        {% endfor %}
+    </div> -->
+</body>
+</html>
